@@ -5,15 +5,16 @@ type InputProps = {
   type?: HTMLInputTypeAttribute;
   label?: string;
   htmlFor: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const Input = (props: InputProps) => {
-  const { label, htmlFor, type = "text" } = props;
+  const { label, htmlFor, type = "text", onChange } = props;
 
   return (
     <Wrapper>
       <Label htmlFor={htmlFor}>{label}</Label>
-      <InputW id={htmlFor} type={type} />
+      <InputW id={htmlFor} type={type} onChange={onChange} />
     </Wrapper>
   );
 };

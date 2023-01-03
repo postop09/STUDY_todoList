@@ -1,10 +1,3 @@
-type ApiParams = {
-  method: string;
-  url: string;
-  authToken?: string | null;
-  body?: any;
-};
-
 const request = async (
   method: string,
   url: string,
@@ -29,7 +22,11 @@ const request = async (
   const baseUrl = process.env.REACT_APP_API_URL;
   const res = await fetch(baseUrl + url, options);
   const json = await res.json();
-  return json;
+  if (res.status === 200 || res.status === 201) {
+    return json;
+  } else {
+    throw new Error(json.details);
+  }
 };
 
 // type ApiParams = {

@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 type BtnProps = {
   onClick: () => void;
+  disabled?: any;
 };
 
 interface Button extends BtnProps {
@@ -10,9 +11,18 @@ interface Button extends BtnProps {
 }
 
 const Button = (props: Button) => {
-  const { onClick, children } = props;
+  const { onClick, children, disabled } = props;
+
+  if (disabled) {
+    return (
+      <DisabledBtn type="button" onClick={onClick} disabled={disabled}>
+        {children}
+      </DisabledBtn>
+    );
+  }
+
   return (
-    <WriteBtn type="button" onClick={onClick}>
+    <WriteBtn type="button" onClick={onClick} disabled={disabled}>
       {children}
     </WriteBtn>
   );
@@ -36,4 +46,15 @@ const WriteBtn = styled.button`
   &:active {
     opacity: 1;
   }
+`;
+
+const DisabledBtn = styled.button`
+  box-shadow: 0 0 5px 1px #00000050;
+  border-radius: ${({ theme }) => theme.ROUND.xs};
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: ${({ theme }) => theme.COLOR.original};
+  color: white;
+  opacity: 0.7;
+  cursor: default;
 `;
