@@ -5,18 +5,21 @@ import Login from "./pages/Login";
 import Error from "./pages/Error";
 import Home from "./pages/Home";
 import Layout from "./component/layout/Layout";
+import {AppProvider} from "./context/AppContext";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Navigate to="/auth" />} />
-          <Route path="/auth" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/*" element={<Error />} />
-        </Route>
-      </Routes>
+      <AppProvider>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Navigate to="/auth" />} />
+            <Route path="/auth" element={<Login />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/*" element={<Error />} />
+          </Route>
+        </Routes>
+      </AppProvider>
     </BrowserRouter>
   );
 }

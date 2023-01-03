@@ -6,15 +6,19 @@ import { BtnWrapper, InputWrapper, TitleH2 } from "../../style/style";
 import { AccType } from "../../types/type";
 import onChangeSetValue from "../../util/onChangeSetValue";
 import validationCheck from "./validationCheck";
+import {useNavigate} from "react-router-dom";
 
 const Login = ({ setNewAccount }: any) => {
   const [account, setAccount] = useState<AccType>({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const onLogin = async () => {
     try {
       const res = await apiRequest("POST", "/users/login", null, account);
       if (res.token) {
-        console.log(res.token);
+        // TODO - util 함수로 묶어주기
+        localStorage.setItem("Authorization", res.token);
+        navigate("/home");
       }
     } catch (e) {
       console.log(e);

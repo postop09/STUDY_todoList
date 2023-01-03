@@ -6,15 +6,18 @@ import apiRequest from "../../api/apiRequest";
 import { AccType } from "../../types/type";
 import onChangeSetValue from "../../util/onChangeSetValue";
 import validationCheck from "./validationCheck";
+import {useNavigate} from "react-router-dom";
 
 const NewAccount = ({ setNewAccount }: any) => {
   const [newAcc, setNewAcc] = useState<AccType>({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const onCreate = async () => {
     try {
       const res = await apiRequest("POST", "/users/create", null, newAcc);
       if (res.token) {
-        setNewAccount(false);
+        localStorage.setItem("Authorization", res.token);
+        navigate("/home");
       }
     } catch (e) {
       console.log(e);
