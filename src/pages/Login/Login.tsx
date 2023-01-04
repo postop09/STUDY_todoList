@@ -28,7 +28,7 @@ const Login = ({ setNewAccount }: any) => {
   return (
     <>
       <TitleH2>로그인</TitleH2>
-      <form action="">
+      <form onSubmit={onLogin}>
         <InputWrapper>
           <Input
             htmlFor={"inp_id"}
@@ -50,7 +50,7 @@ const Login = ({ setNewAccount }: any) => {
         </InputWrapper>
         <BtnWrapper>
           <Button onClick={() => setNewAccount(true)}>회원가입</Button>
-          <Button onClick={onLogin} disabled={!validationCheck(account)}>
+          <Button onClick={onLogin} disabled={!validationCheck(account)} type="submit">
             로그인
           </Button>
         </BtnWrapper>

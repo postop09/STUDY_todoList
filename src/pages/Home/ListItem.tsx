@@ -1,14 +1,20 @@
 import React from "react";
 import Button from "../../component/Button";
 import styled from "styled-components";
+import * as APIs from "../../api/APIs";
 
-const ListItem = () => {
+type ItemProps = {
+    title: string;
+    onDetail: () => void;
+    onDelete: () => void;
+}
+
+const ListItem = ({title, onDetail, onDelete}: ItemProps ) => {
   return (
     <Li>
-      <ContentBtn type="button">내용 선택 시 상세조회</ContentBtn>
+      <ContentBtn type="button" onClick={onDetail}>{title}</ContentBtn>
       <BtnWrapper>
-        <Button onClick={() => {}}>수정</Button>
-        <Button onClick={() => {}}>삭제</Button>
+        <Button onClick={onDelete}>삭제</Button>
       </BtnWrapper>
     </Li>
   );
@@ -22,6 +28,7 @@ const Li = styled.li`
   box-shadow: 0 0 5px 1px #00000040;
   border: 1px solid lightgray;
   border-radius: ${({ theme }) => theme.ROUND.xs};
+  width: 100%;
   padding: 0.5rem;
   transition: all 0.15s;
 

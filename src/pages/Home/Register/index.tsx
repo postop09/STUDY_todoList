@@ -1,31 +1,30 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { BtnWrapper, TitleH2 } from "../../../style/style";
 import Input from "../../../component/Input";
 import Button from "../../../component/Button";
 import onChangeSetValue from "../../../util/onChangeSetValue";
-import {TodoDetailProps, TodoList} from "../../../types/type";
+import { TodoList } from "../../../types/type";
 import * as APIs from "../../../api/APIs";
 
-const Index = (props: TodoDetailProps) => {
-    const {id, title, content, updatedAt, createdAt} = props;
+type RegisterProps = {
+    getList: () => void;
+}
+
+const Index = ({getList}: RegisterProps) => {
   const [todoList, setTodoList] = useState<TodoList>({
     title: "",
     content: "",
   });
-  const [isReadOnly, setIsReadOnly] = useState(true);
 
-  useEffect(() => {
-      setTodoList({
-          title,
-          content,
-      });
-  }, [title, content]);
-
-  const putTodo = async () => {
+  const postTodo = async () => {
     try {
-      await APIs.putTodo(id, todoList);
-      setIsReadOnly(true);
+      await APIs.postTodo(todoList);
+        setTodoList({
+            title: "",
+            content: "",
+        })
+        getList();
     } catch (e) {
       console.log(e);
     }
@@ -39,7 +38,6 @@ const Index = (props: TodoDetailProps) => {
         label={"제목"}
         onChange={(e) => onChangeSetValue(setTodoList, "title", e.target.value)}
         value={todoList.title}
-        readOnly={isReadOnly}
       />
       <InputWrapper>
         <Label htmlFor="inp_content">내용</Label>
@@ -50,12 +48,10 @@ const Index = (props: TodoDetailProps) => {
             onChangeSetValue(setTodoList, "content", e.target.value)
           }
           value={todoList.content}
-          readOnly={isReadOnly}
         ></TextArea>
       </InputWrapper>
       <BtnWrapper>
-          {!isReadOnly && <Button onClick={putTodo}>저장하기</Button>}
-          {isReadOnly && <Button onClick={() => setIsReadOnly(false)}>수정하기</Button>}
+        <Button onClick={postTodo}>등록하기</Button>
       </BtnWrapper>
     </Wrapper>
   );
@@ -88,8 +84,4 @@ const TextArea = styled.textarea`
   min-height: 150px;
   padding: 2px 5px;
   resize: none;
-  
-  &[readOnly] {
-    background-color: lightgray;
-  }
 `;
