@@ -1,30 +1,33 @@
-import {createContext, useEffect, useState} from "react";
-import {Navigate, useNavigate} from "react-router-dom";
+import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "../const/enums";
 
-const AppContext = createContext({});
+type Store = {
+  navigate: any;
+  authToken?: string;
+};
 
-interface contextProps {
-    children: React.ReactNode | React.ReactNode[];
+interface ContextProps {
+  children: React.ReactNode | React.ReactNode[];
 }
 
-const AppProvider = ({children}: contextProps) => {
-    const navigate = useNavigate();
-    const [authToken, setAuthToken] = useState("");
+const AppContext = createContext<Store | null>(null);
 
-    useEffect(() => {
-        const authToken = localStorage.getItem("Authorization");
-        if (authToken) {
-            setAuthToken(authToken);
-            navigate("/home");
-        }
-    }, []);
+const AppProvider = ({ children }: ContextProps) => {
+  const navigate = useNavigate();
 
-    const store = {
-        navigate,
-        authToken
+  useEffect(() => {
+    const authToken = localStorage.getItem("Authorization");
+    if (authToken) {
+      navigate(PATH.HOME);
     }
+  }, []);
 
-    return <AppContext.Provider value={store}>{children}</AppContext.Provider>
-}
+  const store = {
+    navigate,
+  };
 
-export {AppProvider, AppContext};
+  return <AppContext.Provider value={store}>{children}</AppContext.Provider>;
+};
+
+export { AppProvider, AppContext };

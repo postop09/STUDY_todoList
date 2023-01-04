@@ -1,8 +1,7 @@
 import React from "react";
-import { AccType } from "../types/type";
 
-const onChangeSetValue = (
-  setFn: React.Dispatch<React.SetStateAction<AccType>>,
+const onChangeSetValue = <T>(
+  setFn: React.Dispatch<React.SetStateAction<T>>,
   key: string,
   value: string
 ) => {

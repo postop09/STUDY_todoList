@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Input from "../../component/Input";
 import Button from "../../component/Button";
 import { BtnWrapper, InputWrapper, TitleH2 } from "../../style/style";
-import apiRequest from "../../api/apiRequest";
 import { AccType } from "../../types/type";
 import onChangeSetValue from "../../util/onChangeSetValue";
 import validationCheck from "./validationCheck";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import * as APIs from "../../api/APIs";
 
 const NewAccount = ({ setNewAccount }: any) => {
   const [newAcc, setNewAcc] = useState<AccType>({ email: "", password: "" });
@@ -14,7 +14,7 @@ const NewAccount = ({ setNewAccount }: any) => {
 
   const onCreate = async () => {
     try {
-      const res = await apiRequest("POST", "/users/create", null, newAcc);
+      const res = await APIs.postNewAcc(newAcc);
       if (res.token) {
         localStorage.setItem("Authorization", res.token);
         navigate("/home");
