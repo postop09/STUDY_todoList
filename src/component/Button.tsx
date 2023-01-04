@@ -4,6 +4,7 @@ import styled from "styled-components";
 type BtnProps = {
   onClick: () => void;
   disabled?: any;
+  type?: "submit" | "button";
 };
 
 interface Button extends BtnProps {
@@ -11,7 +12,7 @@ interface Button extends BtnProps {
 }
 
 const Button = (props: Button) => {
-  const { onClick, children, disabled } = props;
+  const { onClick, children, disabled, type = "button" } = props;
 
   if (disabled) {
     return (
@@ -22,7 +23,7 @@ const Button = (props: Button) => {
   }
 
   return (
-    <WriteBtn type="button" onClick={onClick} disabled={disabled}>
+    <WriteBtn type={type} onClick={onClick} disabled={disabled}>
       {children}
     </WriteBtn>
   );
@@ -37,6 +38,7 @@ const WriteBtn = styled.button`
   padding: 0.5rem 1rem;
   background-color: ${({ theme }) => theme.COLOR.original};
   color: white;
+  white-space: nowrap;
   transition: all 0.15s;
 
   &:hover {

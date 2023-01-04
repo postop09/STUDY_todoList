@@ -42,7 +42,7 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1;
   }
 
-  menu, ol, ul {
+  menu, ol, ul, li {
     list-style: none;
   }
 
