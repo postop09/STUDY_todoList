@@ -35,6 +35,7 @@ const NewAccount = ({ setNewAccount }: any) => {
             onChange={(e) =>
               onChangeSetValue(setNewAcc, "email", e.target.value)
             }
+            value={newAcc.email}
           />
           <Input
             htmlFor={"inp_newPw"}
@@ -43,6 +44,7 @@ const NewAccount = ({ setNewAccount }: any) => {
             onChange={(e) =>
               onChangeSetValue(setNewAcc, "password", e.target.value)
             }
+            value={newAcc.password}
           />
         </InputWrapper>
         <BtnWrapper>

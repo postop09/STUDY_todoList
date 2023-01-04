@@ -36,6 +36,7 @@ const Login = ({ setNewAccount }: any) => {
             onChange={(e) =>
               onChangeSetValue(setAccount, "email", e.target.value)
             }
+            value={account.email}
           />
           <Input
             htmlFor={"inp_pw"}
@@ -44,6 +45,7 @@ const Login = ({ setNewAccount }: any) => {
             onChange={(e) =>
               onChangeSetValue(setAccount, "password", e.target.value)
             }
+            value={account.password}
           />
         </InputWrapper>
         <BtnWrapper>

@@ -1,19 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import * as APIs from "../../api/APIs";
 import styled from "styled-components";
 import { TitleH2 } from "../../style/style";
 import Button from "../../component/Button";
 import ListItem from "./ListItem";
-import Detail from "./Detail";
+import { AppContext } from "../../context/AppContext";
+import { PATH } from "../../const/enums";
 
 const Index = () => {
+  const context = useContext(AppContext);
+  const navigate = context?.navigate;
+
   useEffect(() => {
     getList();
   }, []);
 
   const getList = async () => {
     try {
-      const res = await APIs.getList();
+      const res = await APIs.getTodoList();
       console.log(res);
     } catch (e) {
       console.log(e);
@@ -25,7 +29,7 @@ const Index = () => {
       <TitleH2>목록</TitleH2>
       <ListItem />
       <RegisterBtn>
-        <Button onClick={() => {}}>추가하기</Button>
+        <Button onClick={() => navigate(PATH.TODO)}>추가하기</Button>
       </RegisterBtn>
     </Wrapper>
   );

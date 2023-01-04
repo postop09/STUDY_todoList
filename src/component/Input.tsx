@@ -6,15 +6,22 @@ type InputProps = {
   label?: string;
   htmlFor: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
 };
 
 const Input = (props: InputProps) => {
-  const { label, htmlFor, type = "text", onChange } = props;
+  const { label, htmlFor, type = "text", onChange, value } = props;
 
   return (
     <Wrapper>
       <Label htmlFor={htmlFor}>{label}</Label>
-      <InputW id={htmlFor} type={type} onChange={onChange} />
+      <InputW
+        id={htmlFor}
+        type={type}
+        onChange={onChange}
+        value={value}
+        placeholder={`${label}을(를) 입력해주세요.`}
+      />
     </Wrapper>
   );
 };
