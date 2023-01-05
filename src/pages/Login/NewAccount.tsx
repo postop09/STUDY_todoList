@@ -15,10 +15,8 @@ const NewAccount = ({ setNewAccount }: any) => {
   const onCreate = async () => {
     try {
       const res = await APIs.postNewAcc(newAcc);
-      if (res.token) {
-        localStorage.setItem("Authorization", res.token);
-        window.location.replace(PATH.HOME);
-      }
+      localStorage.setItem("Authorization", res.token);
+      window.location.replace(PATH.HOME);
     } catch (e) {
       const err = e as ApiError;
       apiErrorHandler(err);

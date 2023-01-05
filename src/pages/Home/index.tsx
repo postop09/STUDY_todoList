@@ -23,30 +23,25 @@ const Index = () => {
     updatedAt: "",
   });
 
+  useEffect(() => {
+    if (window.history.state) {
+      setIsRegister(false);
+      setTodoDetail(window.history.state);
+    }
+  }, []);
+
+  useEffect(() => {
+    getList();
+    window.addEventListener("popstate", setDetailState);
+    return () => window.removeEventListener("popstate", setDetailState);
+  }, []);
+
   const setDetailState = () => {
     const pathName = window.location.pathname;
     if (pathName !== PATH.HOME) {
       setTodoDetail(window.history.state);
     }
   };
-
-  const onReload = (e: any) => {
-    e.preventDefault();
-    const pathName = window.location.pathname;
-    if (pathName !== PATH.HOME) {
-      setTodoDetail(window.history.state);
-    }
-  };
-
-  useEffect(() => {
-    getList();
-    window.addEventListener("popstate", setDetailState);
-    window.addEventListener("beforeunload", onReload);
-    return () => {
-      window.removeEventListener("popstate", setDetailState);
-      window.removeEventListener("beforeunload", onReload);
-    };
-  }, []);
 
   const getList = async () => {
     try {
