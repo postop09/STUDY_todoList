@@ -19,7 +19,7 @@ const AppProvider = ({ children }: ContextProps) => {
   useEffect(() => {
     const authToken = localStorage.getItem("Authorization");
     if (authToken) {
-      navigate(PATH.HOME);
+      window.history.replaceState(null, "", PATH.HOME);
     }
   }, []);
 

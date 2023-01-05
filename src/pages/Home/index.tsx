@@ -8,6 +8,7 @@ import Register from "./Register";
 import { TodoDetailProps, TodoList } from "../../types/type";
 import Detail from "./Detail";
 import apiErrorHandler, { ApiError } from "../../api/apiErrorHandler";
+import { PATH } from "../../const/enums";
 
 type TodoId = TodoList & { id: string };
 
@@ -22,8 +23,29 @@ const Index = () => {
     updatedAt: "",
   });
 
+  const setDetailState = () => {
+    const pathName = window.location.pathname;
+    if (pathName !== PATH.HOME) {
+      setTodoDetail(window.history.state);
+    }
+  };
+
+  const onReload = (e: any) => {
+    e.preventDefault();
+    const pathName = window.location.pathname;
+    if (pathName !== PATH.HOME) {
+      setTodoDetail(window.history.state);
+    }
+  };
+
   useEffect(() => {
     getList();
+    window.addEventListener("popstate", setDetailState);
+    window.addEventListener("beforeunload", onReload);
+    return () => {
+      window.removeEventListener("popstate", setDetailState);
+      window.removeEventListener("beforeunload", onReload);
+    };
   }, []);
 
   const getList = async () => {
@@ -43,6 +65,7 @@ const Index = () => {
     try {
       const { data } = await APIs.getTodo(id);
       setTodoDetail(data);
+      window.history.pushState(data, "", `${PATH.HOME}/${id}`);
     } catch (e) {
       const err = e as ApiError;
       apiErrorHandler(err);

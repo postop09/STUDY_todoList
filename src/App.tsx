@@ -16,6 +16,7 @@ function App() {
             <Route path={PATH.ROOT} element={<Navigate to={PATH.AUTH} />} />
             <Route path={PATH.AUTH} element={<Login />} />
             <Route path={PATH.HOME} element={<Home />} />
+            <Route path={`${PATH.HOME}/:id`} element={<Home />} />
             <Route path="/*" element={<Error />} />
           </Route>
         </Routes>
