@@ -1,17 +1,18 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import * as APIs from "../../api/APIs";
 import styled from "styled-components";
 import { TitleH2 } from "../../style/style";
 import Button from "../../component/Button";
 import ListItem from "./ListItem";
 import Register from "./Register";
-import {TodoDetailProps, TodoList} from "../../types/type";
+import { TodoDetailProps, TodoList } from "../../types/type";
 import Detail from "./Detail";
+import apiErrorHandler, { ApiError } from "../../api/apiErrorHandler";
 
-type TodoId = TodoList & {id: string};
+type TodoId = TodoList & { id: string };
 
 const Index = () => {
-  const [todoList, setTodoList] = useState<TodoId[]>([])
+  const [todoList, setTodoList] = useState<TodoId[]>([]);
   const [isRegister, setIsRegister] = useState(true);
   const [todoDetail, setTodoDetail] = useState<TodoDetailProps>({
     id: "",
@@ -32,47 +33,59 @@ const Index = () => {
       const newData = data.filter((item) => item.title);
       setTodoList(newData);
     } catch (e) {
-      console.log(e);
+      const err = e as ApiError;
+      apiErrorHandler(err);
     }
   };
 
   const onDetail = async (id: string) => {
     setIsRegister(false);
     try {
-      const {data} = await APIs.getTodo(id);
+      const { data } = await APIs.getTodo(id);
       setTodoDetail(data);
     } catch (e) {
-      console.log(e);
+      const err = e as ApiError;
+      apiErrorHandler(err);
     }
-  }
+  };
 
   const onDelete = async (id: string) => {
     try {
-      const {data} = await APIs.deleteTodo(id);
+      const { data } = await APIs.deleteTodo(id);
       if (data.id) {
         getList();
       }
     } catch (e) {
-      console.log(e);
+      const err = e as ApiError;
+      apiErrorHandler(err);
     }
-  }
+  };
 
   return (
-      <Wrapper>
-        <TodoWrapper>
-          <TitleWrapper>
-            <TitleH2>목록</TitleH2>
-            <div><Button onClick={() => setIsRegister(true)}>추가</Button></div>
-          </TitleWrapper>
-          <Ul>
-            {todoList.map((todo) => {
-              return <ListItem key={todo.id} title={todo.title} onDetail={() => onDetail(todo.id)} onDelete={() => onDelete(todo.id)}/>
-            })}
-          </Ul>
-        </TodoWrapper>
-        {isRegister && <Register getList={getList}/>}
-        {!isRegister && <Detail {...todoDetail}/>}
-      </Wrapper>
+    <Wrapper>
+      <TodoWrapper>
+        <TitleWrapper>
+          <TitleH2>목록</TitleH2>
+          <div>
+            <Button onClick={() => setIsRegister(true)}>추가</Button>
+          </div>
+        </TitleWrapper>
+        <Ul>
+          {todoList.map((todo) => {
+            return (
+              <ListItem
+                key={todo.id}
+                title={todo.title}
+                onDetail={() => onDetail(todo.id)}
+                onDelete={() => onDelete(todo.id)}
+              />
+            );
+          })}
+        </Ul>
+      </TodoWrapper>
+      {isRegister && <Register getList={getList} />}
+      {!isRegister && <Detail {...todoDetail} getList={getList} />}
+    </Wrapper>
   );
 };
 
@@ -83,7 +96,7 @@ const Wrapper = styled.div`
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
-`
+`;
 
 const TodoWrapper = styled.section`
   box-shadow: 0 0 5px 1px #00000040;
@@ -96,7 +109,7 @@ const TodoWrapper = styled.section`
 const TitleWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-`
+`;
 
 const Ul = styled.ul`
   li:not(li:last-child) {

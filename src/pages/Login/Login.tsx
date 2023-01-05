@@ -5,12 +5,12 @@ import { BtnWrapper, InputWrapper, TitleH2 } from "../../style/style";
 import { AccType } from "../../types/type";
 import onChangeSetValue from "../../util/onChangeSetValue";
 import validationCheck from "./validationCheck";
-import { useNavigate } from "react-router-dom";
 import * as APIs from "../../api/APIs";
+import { PATH } from "../../const/enums";
+import apiErrorHandler, { ApiError } from "../../api/apiErrorHandler";
 
 const Login = ({ setNewAccount }: any) => {
   const [account, setAccount] = useState<AccType>({ email: "", password: "" });
-  const navigate = useNavigate();
 
   const onLogin = async () => {
     try {
@@ -18,10 +18,11 @@ const Login = ({ setNewAccount }: any) => {
       if (res.token) {
         // TODO - util 함수로 묶어주기
         localStorage.setItem("Authorization", res.token);
-        navigate("/home");
+        window.location.replace(PATH.HOME);
       }
     } catch (e) {
-      console.log(e);
+      const err = e as ApiError;
+      apiErrorHandler(err);
     }
   };
 
@@ -50,7 +51,11 @@ const Login = ({ setNewAccount }: any) => {
         </InputWrapper>
         <BtnWrapper>
           <Button onClick={() => setNewAccount(true)}>회원가입</Button>
-          <Button onClick={onLogin} disabled={!validationCheck(account)} type="submit">
+          <Button
+            onClick={onLogin}
+            disabled={!validationCheck(account)}
+            type="submit"
+          >
             로그인
           </Button>
         </BtnWrapper>

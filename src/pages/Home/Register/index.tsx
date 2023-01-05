@@ -6,12 +6,13 @@ import Button from "../../../component/Button";
 import onChangeSetValue from "../../../util/onChangeSetValue";
 import { TodoList } from "../../../types/type";
 import * as APIs from "../../../api/APIs";
+import apiErrorHandler, { ApiError } from "../../../api/apiErrorHandler";
 
-type RegisterProps = {
-    getList: () => void;
-}
+export type RegisterProps = {
+  getList: () => void;
+};
 
-const Index = ({getList}: RegisterProps) => {
+const Index = ({ getList }: RegisterProps) => {
   const [todoList, setTodoList] = useState<TodoList>({
     title: "",
     content: "",
@@ -20,13 +21,14 @@ const Index = ({getList}: RegisterProps) => {
   const postTodo = async () => {
     try {
       await APIs.postTodo(todoList);
-        setTodoList({
-            title: "",
-            content: "",
-        })
-        getList();
+      setTodoList({
+        title: "",
+        content: "",
+      });
+      getList();
     } catch (e) {
-      console.log(e);
+      const err = e as ApiError;
+      apiErrorHandler(err);
     }
   };
 

@@ -1,14 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BtnWrapper, TitleH2 } from "../../../style/style";
 import Input from "../../../component/Input";
 import Button from "../../../component/Button";
 import onChangeSetValue from "../../../util/onChangeSetValue";
-import {TodoDetailProps, TodoList} from "../../../types/type";
+import { TodoDetailProps, TodoList } from "../../../types/type";
 import * as APIs from "../../../api/APIs";
+import { RegisterProps } from "../Register";
+import apiErrorHandler, { ApiError } from "../../../api/apiErrorHandler";
 
-const Index = (props: TodoDetailProps) => {
-    const {id, title, content, updatedAt, createdAt} = props;
+const Index = (props: TodoDetailProps & RegisterProps) => {
+  const { id, title, content, updatedAt, createdAt, getList } = props;
   const [todoList, setTodoList] = useState<TodoList>({
     title: "",
     content: "",
@@ -16,18 +18,20 @@ const Index = (props: TodoDetailProps) => {
   const [isReadOnly, setIsReadOnly] = useState(true);
 
   useEffect(() => {
-      setTodoList({
-          title,
-          content,
-      });
+    setTodoList({
+      title,
+      content,
+    });
   }, [title, content]);
 
   const putTodo = async () => {
     try {
       await APIs.putTodo(id, todoList);
       setIsReadOnly(true);
+      getList();
     } catch (e) {
-      console.log(e);
+      const err = e as ApiError;
+      apiErrorHandler(err);
     }
   };
 
@@ -54,8 +58,10 @@ const Index = (props: TodoDetailProps) => {
         ></TextArea>
       </InputWrapper>
       <BtnWrapper>
-          {!isReadOnly && <Button onClick={putTodo}>저장하기</Button>}
-          {isReadOnly && <Button onClick={() => setIsReadOnly(false)}>수정하기</Button>}
+        {!isReadOnly && <Button onClick={putTodo}>저장하기</Button>}
+        {isReadOnly && (
+          <Button onClick={() => setIsReadOnly(false)}>수정하기</Button>
+        )}
       </BtnWrapper>
     </Wrapper>
   );
@@ -88,7 +94,7 @@ const TextArea = styled.textarea`
   min-height: 150px;
   padding: 2px 5px;
   resize: none;
-  
+
   &[readOnly] {
     background-color: lightgray;
   }

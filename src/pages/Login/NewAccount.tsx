@@ -5,22 +5,23 @@ import { BtnWrapper, InputWrapper, TitleH2 } from "../../style/style";
 import { AccType } from "../../types/type";
 import onChangeSetValue from "../../util/onChangeSetValue";
 import validationCheck from "./validationCheck";
-import { useNavigate } from "react-router-dom";
 import * as APIs from "../../api/APIs";
+import { PATH } from "../../const/enums";
+import apiErrorHandler, { ApiError } from "../../api/apiErrorHandler";
 
 const NewAccount = ({ setNewAccount }: any) => {
   const [newAcc, setNewAcc] = useState<AccType>({ email: "", password: "" });
-  const navigate = useNavigate();
 
   const onCreate = async () => {
     try {
       const res = await APIs.postNewAcc(newAcc);
       if (res.token) {
         localStorage.setItem("Authorization", res.token);
-        navigate("/home");
+        window.location.replace(PATH.HOME);
       }
     } catch (e) {
-      console.log(e);
+      const err = e as ApiError;
+      apiErrorHandler(err);
     }
   };
 
