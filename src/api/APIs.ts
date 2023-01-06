@@ -1,5 +1,5 @@
 import apiRequest from "./apiRequest";
-import { AccType, TodoList } from "../types/type";
+import { AccType, Todo } from "../types/type";
 
 /** ----------------------------------------------
  >>> TABLE OF CONTENTS
@@ -14,13 +14,11 @@ import { AccType, TodoList } from "../types/type";
 
 // 0-1. 회원가입
 export const postNewAcc = (newAcc: AccType) => {
-  const authToken = localStorage.getItem("Authorization");
   return apiRequest("POST", "/users/create", null, newAcc);
 };
 
 // 0-2. 로그인
 export const postLogin = (account: AccType) => {
-  const authToken = localStorage.getItem("Authorization");
   return apiRequest("POST", "/users/login", null, account);
 };
 
@@ -41,13 +39,13 @@ export const getTodo = (id: string) => {
 };
 
 // 1-3. 등록
-export const postTodo = (body: TodoList) => {
+export const postTodo = (body: Todo) => {
   const authToken = localStorage.getItem("Authorization");
   return apiRequest("POST", "/todos", authToken, body);
 };
 
 // 1-4. 수정
-export const putTodo = (id: string, body: TodoList) => {
+export const putTodo = (id: string, body: Todo) => {
   const authToken = localStorage.getItem("Authorization");
   return apiRequest("PUT", `/todos/${id}`, authToken, body);
 };

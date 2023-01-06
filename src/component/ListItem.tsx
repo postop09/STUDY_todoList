@@ -1,18 +1,19 @@
 import React from "react";
-import Button from "../../component/Button";
+import Button from "./Button";
 import styled from "styled-components";
-import * as APIs from "../../api/APIs";
 
 type ItemProps = {
-    title: string;
-    onDetail: () => void;
-    onDelete: () => void;
-}
+  title: string;
+  onDetail: () => void;
+  onDelete: () => void;
+};
 
-const ListItem = ({title, onDetail, onDelete}: ItemProps ) => {
+const ListItem = ({ title, onDetail, onDelete }: ItemProps) => {
   return (
     <Li>
-      <ContentBtn type="button" onClick={onDetail}>{title}</ContentBtn>
+      <ContentBtn type="button" onClick={onDetail}>
+        {title}
+      </ContentBtn>
       <BtnWrapper>
         <Button onClick={onDelete}>삭제</Button>
       </BtnWrapper>

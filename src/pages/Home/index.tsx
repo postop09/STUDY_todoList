@@ -3,19 +3,18 @@ import * as APIs from "../../api/APIs";
 import styled from "styled-components";
 import { TitleH2 } from "../../style/style";
 import Button from "../../component/Button";
-import ListItem from "./ListItem";
+import ListItem from "../../component/ListItem";
 import Register from "./Register";
-import { TodoDetailProps, TodoList } from "../../types/type";
+import { TodoDetail, TodoList } from "../../types/type";
 import Detail from "./Detail";
 import apiErrorHandler, { ApiError } from "../../api/apiErrorHandler";
 import { PATH } from "../../const/enums";
 
-type TodoId = TodoList & { id: string };
-
+// TODO - 로그아웃?
 const Index = () => {
-  const [todoList, setTodoList] = useState<TodoId[]>([]);
+  const [todoList, setTodoList] = useState<TodoList[]>();
   const [isRegister, setIsRegister] = useState(true);
-  const [todoDetail, setTodoDetail] = useState<TodoDetailProps>({
+  const [todoDetail, setTodoDetail] = useState<TodoDetail>({
     id: "",
     title: "",
     content: "",
@@ -24,18 +23,21 @@ const Index = () => {
   });
 
   useEffect(() => {
-    if (window.history.state) {
-      setIsRegister(false);
-      setTodoDetail(window.history.state);
-    }
-  }, []);
-
-  useEffect(() => {
     getList();
+    setReloadDetailState();
     window.addEventListener("popstate", setDetailState);
     return () => window.removeEventListener("popstate", setDetailState);
   }, []);
 
+  // 새로고침 시 이벤트
+  const setReloadDetailState = () => {
+    if (window.history.state) {
+      setIsRegister(false);
+      setTodoDetail(window.history.state);
+    }
+  };
+
+  // 뒤로가기 시 이벤트
   const setDetailState = () => {
     const pathName = window.location.pathname;
     if (pathName !== PATH.HOME) {
@@ -46,7 +48,7 @@ const Index = () => {
   const getList = async () => {
     try {
       const res = await APIs.getTodoList();
-      const data: TodoDetailProps[] = res.data;
+      const data: TodoDetail[] = res.data;
       const newData = data.filter((item) => item.title);
       setTodoList(newData);
     } catch (e) {
@@ -89,20 +91,21 @@ const Index = () => {
           </div>
         </TitleWrapper>
         <Ul>
-          {todoList.map((todo) => {
-            return (
-              <ListItem
-                key={todo.id}
-                title={todo.title}
-                onDetail={() => onDetail(todo.id)}
-                onDelete={() => onDelete(todo.id)}
-              />
-            );
-          })}
+          {todoList &&
+            todoList.map((todo) => {
+              return (
+                <ListItem
+                  key={todo.id}
+                  title={todo.title}
+                  onDetail={() => onDetail(todo?.id)}
+                  onDelete={() => onDelete(todo?.id)}
+                />
+              );
+            })}
         </Ul>
       </TodoWrapper>
-      {isRegister && <Register getList={getList} />}
-      {!isRegister && <Detail {...todoDetail} getList={getList} />}
+      {isRegister && <Register onSuccess={getList} />}
+      {!isRegister && <Detail {...todoDetail} onSuccess={getList} />}
     </Wrapper>
   );
 };

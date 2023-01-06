@@ -4,14 +4,13 @@ import { BtnWrapper, TitleH2 } from "../../../style/style";
 import Input from "../../../component/Input";
 import Button from "../../../component/Button";
 import onChangeSetValue from "../../../util/onChangeSetValue";
-import { TodoDetailProps, TodoList } from "../../../types/type";
+import { TodoDetail, Todo, SuccessAction } from "../../../types/type";
 import * as APIs from "../../../api/APIs";
-import { RegisterProps } from "../Register";
 import apiErrorHandler, { ApiError } from "../../../api/apiErrorHandler";
 
-const Index = (props: TodoDetailProps & RegisterProps) => {
-  const { id, title, content, updatedAt, createdAt, getList } = props;
-  const [todoList, setTodoList] = useState<TodoList>({
+const Index = (props: TodoDetail & SuccessAction) => {
+  const { id, title, content, onSuccess } = props;
+  const [todoList, setTodoList] = useState<Todo>({
     title: "",
     content: "",
   });
@@ -24,11 +23,11 @@ const Index = (props: TodoDetailProps & RegisterProps) => {
     });
   }, [title, content]);
 
-  const putTodo = async () => {
+  const onModify = async () => {
     try {
       await APIs.putTodo(id, todoList);
       setIsReadOnly(true);
-      getList();
+      onSuccess();
     } catch (e) {
       const err = e as ApiError;
       apiErrorHandler(err);
@@ -58,7 +57,7 @@ const Index = (props: TodoDetailProps & RegisterProps) => {
         ></TextArea>
       </InputWrapper>
       <BtnWrapper>
-        {!isReadOnly && <Button onClick={putTodo}>저장하기</Button>}
+        {!isReadOnly && <Button onClick={onModify}>저장하기</Button>}
         {isReadOnly && (
           <Button onClick={() => setIsReadOnly(false)}>수정하기</Button>
         )}

@@ -6,10 +6,14 @@ import styled from "styled-components";
 const Index = () => {
   const [newAccount, setNewAccount] = useState(false);
 
+  const onChangeAuth = () => {
+    setNewAccount((prev) => !prev);
+  };
+
   return (
     <Wrapper>
-      {newAccount && <NewAccount setNewAccount={setNewAccount} />}
-      {!newAccount && <Login setNewAccount={setNewAccount} />}
+      {newAccount && <NewAccount onChangeAuth={onChangeAuth} />}
+      {!newAccount && <Login onChangeAuth={onChangeAuth} />}
     </Wrapper>
   );
 };

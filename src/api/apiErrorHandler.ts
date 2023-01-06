@@ -5,7 +5,6 @@ export type ApiError = {
 };
 
 const apiErrorHandler = (error: ApiError) => {
-  console.log(error);
   if (
     error.details === "Token is missing" ||
     error.status === 401 ||

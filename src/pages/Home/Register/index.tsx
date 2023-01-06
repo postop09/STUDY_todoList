@@ -4,28 +4,24 @@ import { BtnWrapper, TitleH2 } from "../../../style/style";
 import Input from "../../../component/Input";
 import Button from "../../../component/Button";
 import onChangeSetValue from "../../../util/onChangeSetValue";
-import { TodoList } from "../../../types/type";
+import { SuccessAction, Todo } from "../../../types/type";
 import * as APIs from "../../../api/APIs";
 import apiErrorHandler, { ApiError } from "../../../api/apiErrorHandler";
 
-export type RegisterProps = {
-  getList: () => void;
-};
-
-const Index = ({ getList }: RegisterProps) => {
-  const [todoList, setTodoList] = useState<TodoList>({
+const Index = ({ onSuccess }: SuccessAction) => {
+  const [todoList, setTodoList] = useState<Todo>({
     title: "",
     content: "",
   });
 
-  const postTodo = async () => {
+  const onRegister = async () => {
     try {
       await APIs.postTodo(todoList);
       setTodoList({
         title: "",
         content: "",
       });
-      getList();
+      onSuccess();
     } catch (e) {
       const err = e as ApiError;
       apiErrorHandler(err);
@@ -53,7 +49,7 @@ const Index = ({ getList }: RegisterProps) => {
         ></TextArea>
       </InputWrapper>
       <BtnWrapper>
-        <Button onClick={postTodo}>등록하기</Button>
+        <Button onClick={onRegister}>등록하기</Button>
       </BtnWrapper>
     </Wrapper>
   );

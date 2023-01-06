@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../../component/Input";
 import Button from "../../component/Button";
 import { BtnWrapper, InputWrapper, TitleH2 } from "../../style/style";
-import { AccType } from "../../types/type";
+import { AccType, AuthChange } from "../../types/type";
 import onChangeSetValue from "../../util/onChangeSetValue";
-import validationCheck from "./validationCheck";
+import loginValidation from "../../util/loginValidation";
 import * as APIs from "../../api/APIs";
 import { PATH } from "../../const/enums";
 import apiErrorHandler, { ApiError } from "../../api/apiErrorHandler";
 
-const Login = ({ setNewAccount }: any) => {
+const Login = ({ onChangeAuth }: AuthChange) => {
   const [account, setAccount] = useState<AccType>({ email: "", password: "" });
 
   useEffect(() => {
@@ -54,10 +54,10 @@ const Login = ({ setNewAccount }: any) => {
           />
         </InputWrapper>
         <BtnWrapper>
-          <Button onClick={() => setNewAccount(true)}>회원가입</Button>
+          <Button onClick={onChangeAuth}>회원가입</Button>
           <Button
             onClick={onLogin}
-            disabled={!validationCheck(account)}
+            disabled={!loginValidation(account)}
             type="submit"
           >
             로그인

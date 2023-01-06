@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import Input from "../../component/Input";
 import Button from "../../component/Button";
 import { BtnWrapper, InputWrapper, TitleH2 } from "../../style/style";
-import { AccType } from "../../types/type";
+import { AccType, AuthChange } from "../../types/type";
 import onChangeSetValue from "../../util/onChangeSetValue";
-import validationCheck from "./validationCheck";
+import loginValidation from "../../util/loginValidation";
 import * as APIs from "../../api/APIs";
 import { PATH } from "../../const/enums";
 import apiErrorHandler, { ApiError } from "../../api/apiErrorHandler";
 
-const NewAccount = ({ setNewAccount }: any) => {
+const NewAccount = ({ onChangeAuth }: AuthChange) => {
   const [newAcc, setNewAcc] = useState<AccType>({ email: "", password: "" });
 
   const onCreate = async () => {
@@ -47,8 +47,8 @@ const NewAccount = ({ setNewAccount }: any) => {
           />
         </InputWrapper>
         <BtnWrapper>
-          <Button onClick={() => setNewAccount(false)}>뒤로가기</Button>
-          <Button onClick={onCreate} disabled={!validationCheck(newAcc)}>
+          <Button onClick={onChangeAuth}>뒤로가기</Button>
+          <Button onClick={onCreate} disabled={!loginValidation(newAcc)}>
             계정생성
           </Button>
         </BtnWrapper>
