@@ -12,7 +12,7 @@ const loginValidation = (params: AccType) => {
   // 비밀번호 정규표현식 (영어, 숫자, 특수문자, 8자이상) : 조건을 만족하면 true
   const passwdValid = () => {
     const passwdValid =
-      /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$%*#^?&\\(\\)\-_=+]).{8}/;
+      /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$%*#^?&()\-_=+]).{8}/g;
     return passwdValid.test(password);
   };
 
