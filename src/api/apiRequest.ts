@@ -35,30 +35,4 @@ const request = async (
   });
 };
 
-// type ApiParams = {
-//   uri: string;
-//   authToken?: string;
-//   body?: {};
-// };
-//
-// class ApiRequest {
-//   readonly baseUrl = process.env.REACT_APP_API_URL;
-//
-//   get = ({ uri, authToken }: ApiParams) => {
-//     return request("GET", this.baseUrl + uri, authToken);
-//   };
-//   post = (uri, authToken, body) => {
-//     return request("POST", this.baseUrl + uri, authToken, body);
-//   };
-//   put = (uri, authToken, body) => {
-//     return request("PUT", this.baseUrl + uri, authToken, body);
-//   };
-//   patch = (uri, authToken, body) => {
-//     return request("PATCH", this.baseUrl + uri, authToken, body);
-//   };
-//   delete = (uri, authToken, body) => {
-//     return request("DELETE", this.baseUrl + uri, authToken, body);
-//   };
-// }
-
 export default request;
