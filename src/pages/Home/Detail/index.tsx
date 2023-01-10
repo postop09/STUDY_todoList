@@ -6,9 +6,9 @@ import Button from "../../../component/Button";
 import onChangeSetValue from "../../../util/onChangeSetValue";
 import { TodoDetail, Todo } from "../../../types/type";
 import * as APIs from "../../../api/APIs";
-import apiErrorHandler, { ApiError } from "../../../api/apiErrorHandler";
 import { useMutation } from "react-query";
 import { queryClient } from "../../../App";
+import apiErrorHandler from "../../../api/apiErrorHandler";
 
 const Index = (props: TodoDetail) => {
   const { id, title, content} = props;
@@ -25,11 +25,12 @@ const Index = (props: TodoDetail) => {
     });
   }, [title, content]);
 
-  const onModify = useMutation(() => APIs.putTodo(id, todoList), {
+  const {mutate: onModify} = useMutation(() => APIs.putTodo(id, todoList), {
     onSuccess: () => {
       queryClient.invalidateQueries("getTodo");
       setIsReadOnly(true);
-    }
+    },
+    onError: apiErrorHandler,
   });
 
   return (
@@ -55,7 +56,7 @@ const Index = (props: TodoDetail) => {
         ></TextArea>
       </InputWrapper>
       <BtnWrapper>
-        {!isReadOnly && <Button onClick={onModify.mutate}>저장하기</Button>}
+        {!isReadOnly && <Button onClick={onModify}>저장하기</Button>}
         {isReadOnly && (
           <Button onClick={() => setIsReadOnly(false)}>수정하기</Button>
         )}

@@ -35,7 +35,3 @@ export type TodoDetail = {
   createdAt: string;
   updatedAt: string;
 };
-
-export type SuccessAction = {
-  onSuccess: () => void;
-};

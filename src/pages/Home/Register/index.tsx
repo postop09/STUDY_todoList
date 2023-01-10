@@ -4,11 +4,11 @@ import { BtnWrapper, TitleH2 } from "../../../style/style";
 import Input from "../../../component/Input";
 import Button from "../../../component/Button";
 import onChangeSetValue from "../../../util/onChangeSetValue";
-import { SuccessAction, Todo } from "../../../types/type";
+import { Todo } from "../../../types/type";
 import * as APIs from "../../../api/APIs";
-import apiErrorHandler, { ApiError } from "../../../api/apiErrorHandler";
 import { useMutation } from "react-query";
 import { queryClient } from "../../../App";
+import apiErrorHandler from "../../../api/apiErrorHandler";
 
 const Index = () => {
   const [todoList, setTodoList] = useState<Todo>({
@@ -16,14 +16,15 @@ const Index = () => {
     content: "",
   });
 
-  const onRegister = useMutation(() => APIs.postTodo(todoList), {
+  const {mutate: onRegister} = useMutation(() => APIs.postTodo(todoList), {
     onSuccess: () => {
       queryClient.invalidateQueries("getTodo");
       setTodoList({
         title: "",
         content: "",
       });
-    }
+    },
+    onError: apiErrorHandler,
   });
 
   return (
@@ -47,7 +48,7 @@ const Index = () => {
         ></TextArea>
       </InputWrapper>
       <BtnWrapper>
-        <Button onClick={onRegister.mutate}>등록하기</Button>
+        <Button onClick={onRegister}>등록하기</Button>
       </BtnWrapper>
     </Wrapper>
   );
