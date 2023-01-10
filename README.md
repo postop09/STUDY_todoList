@@ -1,11 +1,13 @@
 # 원티드 프리온보딩 챌린지
 
 ## 🔴프로젝트 설명
+React-Query, TypeScript 학습을 위해 원티드 프리온보딩 챌린지에 신청.
 
-프로젝트 원인, 프로젝트 개요
+사전과제 수행 후 수강기간 중 리팩토링을 통해 새로운 기술에 대해 효율적으로 학습하고 배울 수 있다고 기대하여 진행한 프로젝트
+
+[원티드 프리온보딩 챌린지](https://www.wanted.co.kr/events/pre_challenge_fe_5)의 선택적 사전과제로, CRUD 구현 및 React-Query의 활용으로 기술 역량 향상 챌린지이다.
 
 ## 🔴빌드 및 실행방법
-
 1. [프리온보딩 API](https://github.com/postop09/wanted-pre-onboarding-challenge-fe-1-api) Repository 클론
 2. 실행이 안되는 경우 `npm update`
 3. 서버 실행
@@ -57,7 +59,6 @@
 |<img src="https://user-images.githubusercontent.com/93017923/211479500-b0873f3d-f4f5-4c2d-ac90-263f85855e20.gif" width="400px"/>|
 
 ## 🔴정리
-
 ### 👹개발 전 목표/고려사항
 - TypeScript 최적화
 - api 호출 로직
