@@ -4,7 +4,6 @@ import Login from "./pages/Login";
 import Error from "./pages/Error";
 import Home from "./pages/Home";
 import Layout from "./component/layout/Layout";
-import { AppProvider } from "./context/AppContext";
 import { PATH } from "./const/enums";
 import { QueryClient, QueryClientProvider } from "react-query";
 
@@ -13,7 +12,6 @@ export const queryClient = new QueryClient();
 function App() {
   return (
     <BrowserRouter>
-      <AppProvider>
         <QueryClientProvider client={queryClient}>
           <Routes>
             <Route element={<Layout />}>
@@ -25,7 +23,6 @@ function App() {
             </Route>
           </Routes>
         </QueryClientProvider>
-      </AppProvider>
     </BrowserRouter>
   );
 }

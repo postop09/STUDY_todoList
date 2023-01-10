@@ -29,7 +29,7 @@ const Index = () => {
 
   // 새로고침 시 이벤트
   const setReloadDetailState = () => {
-    if (window.history.state.title) {
+    if (window.history.state?.title) {
       setIsRegister(false);
       setTodoDetail(window.history.state);
     }
