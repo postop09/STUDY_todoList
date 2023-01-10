@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Input from "../../component/Input";
 import Button from "../../component/Button";
 import { BtnWrapper, InputWrapper, TitleH2 } from "../../style/style";
-import { AccType, AuthChange } from "../../types/type";
+import { AccType, AuthChange, BtnClickEvent } from "../../types/type";
 import onChangeSetValue from "../../util/onChangeSetValue";
 import loginValidation from "../../util/loginValidation";
 import * as APIs from "../../api/APIs";
@@ -12,7 +12,8 @@ import apiErrorHandler, { ApiError } from "../../api/apiErrorHandler";
 const NewAccount = ({ onChangeAuth }: AuthChange) => {
   const [newAcc, setNewAcc] = useState<AccType>({ email: "", password: "" });
 
-  const onCreate = async () => {
+  const onCreate = async (e: BtnClickEvent) => {
+    e.preventDefault();
     try {
       const res = await APIs.postNewAcc(newAcc);
       localStorage.setItem("Authorization", res.token);
@@ -26,7 +27,7 @@ const NewAccount = ({ onChangeAuth }: AuthChange) => {
   return (
     <>
       <TitleH2>회원가입</TitleH2>
-      <form action="">
+      <form>
         <InputWrapper>
           <Input
             htmlFor={"inp_newId"}
@@ -48,7 +49,11 @@ const NewAccount = ({ onChangeAuth }: AuthChange) => {
         </InputWrapper>
         <BtnWrapper>
           <Button onClick={onChangeAuth}>뒤로가기</Button>
-          <Button onClick={onCreate} disabled={!loginValidation(newAcc)}>
+          <Button
+            onClick={onCreate}
+            disabled={!loginValidation(newAcc)}
+            type="submit"
+          >
             계정생성
           </Button>
         </BtnWrapper>

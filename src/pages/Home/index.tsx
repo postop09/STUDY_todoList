@@ -9,6 +9,8 @@ import { TodoDetail, TodoList } from "../../types/type";
 import Detail from "./Detail";
 import apiErrorHandler, { ApiError } from "../../api/apiErrorHandler";
 import { PATH } from "../../const/enums";
+import { useMutation, useQuery } from "react-query";
+import { queryClient } from "../../App";
 
 // TODO - 로그아웃?
 const Index = () => {
@@ -23,7 +25,6 @@ const Index = () => {
   });
 
   useEffect(() => {
-    getList();
     setReloadDetailState();
     window.addEventListener("popstate", setDetailState);
     return () => window.removeEventListener("popstate", setDetailState);
@@ -45,17 +46,16 @@ const Index = () => {
     }
   };
 
-  const getList = async () => {
+  const {data} = useQuery("getTodo", async () => {
     try {
       const res = await APIs.getTodoList();
       const data: TodoDetail[] = res.data;
-      const newData = data.filter((item) => item.title);
-      setTodoList(newData);
+      return data.filter((item: TodoDetail) => item.title);
     } catch (e) {
       const err = e as ApiError;
       apiErrorHandler(err);
     }
-  };
+  });
 
   const onDetail = async (id: string) => {
     setIsRegister(false);
@@ -69,17 +69,11 @@ const Index = () => {
     }
   };
 
-  const onDelete = async (id: string) => {
-    try {
-      const { data } = await APIs.deleteTodo(id);
-      if (data.id) {
-        getList();
-      }
-    } catch (e) {
-      const err = e as ApiError;
-      apiErrorHandler(err);
+  const onDelete = useMutation((id: string) => APIs.deleteTodo(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("getTodo");
     }
-  };
+  });
 
   return (
     <Wrapper>
@@ -91,21 +85,21 @@ const Index = () => {
           </div>
         </TitleWrapper>
         <Ul>
-          {todoList &&
-            todoList.map((todo) => {
+          {data &&
+            data.map((todo) => {
               return (
                 <ListItem
                   key={todo.id}
                   title={todo.title}
                   onDetail={() => onDetail(todo?.id)}
-                  onDelete={() => onDelete(todo?.id)}
+                  onDelete={() => onDelete.mutate(todo?.id)}
                 />
               );
             })}
         </Ul>
       </TodoWrapper>
-      {isRegister && <Register onSuccess={getList} />}
-      {!isRegister && <Detail {...todoDetail} onSuccess={getList} />}
+      {isRegister && <Register />}
+      {!isRegister && <Detail {...todoDetail} />}
     </Wrapper>
   );
 };

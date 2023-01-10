@@ -6,20 +6,25 @@ import Home from "./pages/Home";
 import Layout from "./component/layout/Layout";
 import { AppProvider } from "./context/AppContext";
 import { PATH } from "./const/enums";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+export const queryClient = new QueryClient();
 
 function App() {
   return (
     <BrowserRouter>
       <AppProvider>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path={PATH.ROOT} element={<Navigate to={PATH.AUTH} />} />
-            <Route path={PATH.AUTH} element={<Login />} />
-            <Route path={PATH.HOME} element={<Home />} />
-            <Route path={`${PATH.HOME}/:id`} element={<Home />} />
-            <Route path="/*" element={<Error />} />
-          </Route>
-        </Routes>
+        <QueryClientProvider client={queryClient}>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path={PATH.ROOT} element={<Navigate to={PATH.AUTH} />} />
+              <Route path={PATH.AUTH} element={<Login />} />
+              <Route path={PATH.HOME} element={<Home />} />
+              <Route path={`${PATH.HOME}/:id`} element={<Home />} />
+              <Route path="/*" element={<Error />} />
+            </Route>
+          </Routes>
+        </QueryClientProvider>
       </AppProvider>
     </BrowserRouter>
   );

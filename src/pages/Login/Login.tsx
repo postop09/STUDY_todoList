@@ -2,24 +2,27 @@ import React, { useEffect, useState } from "react";
 import Input from "../../component/Input";
 import Button from "../../component/Button";
 import { BtnWrapper, InputWrapper, TitleH2 } from "../../style/style";
-import { AccType, AuthChange } from "../../types/type";
+import { AccType, AuthChange, BtnClickEvent } from "../../types/type";
 import onChangeSetValue from "../../util/onChangeSetValue";
 import loginValidation from "../../util/loginValidation";
 import * as APIs from "../../api/APIs";
 import { PATH } from "../../const/enums";
 import apiErrorHandler, { ApiError } from "../../api/apiErrorHandler";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ onChangeAuth }: AuthChange) => {
   const [account, setAccount] = useState<AccType>({ email: "", password: "" });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const authToken = localStorage.getItem("Authorization");
     if (authToken) {
-      window.location.replace(PATH.HOME);
+      navigate(PATH.HOME);
     }
   }, []);
 
-  const onLogin = async () => {
+  const onLogin = async (e: BtnClickEvent) => {
+    e.preventDefault();
     try {
       const res = await APIs.postLogin(account);
       localStorage.setItem("Authorization", res.token);
@@ -33,7 +36,7 @@ const Login = ({ onChangeAuth }: AuthChange) => {
   return (
     <>
       <TitleH2>로그인</TitleH2>
-      <form onSubmit={onLogin}>
+      <form>
         <InputWrapper>
           <Input
             htmlFor={"inp_id"}

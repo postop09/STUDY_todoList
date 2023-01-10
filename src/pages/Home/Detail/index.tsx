@@ -4,12 +4,14 @@ import { BtnWrapper, TitleH2 } from "../../../style/style";
 import Input from "../../../component/Input";
 import Button from "../../../component/Button";
 import onChangeSetValue from "../../../util/onChangeSetValue";
-import { TodoDetail, Todo, SuccessAction } from "../../../types/type";
+import { TodoDetail, Todo } from "../../../types/type";
 import * as APIs from "../../../api/APIs";
 import apiErrorHandler, { ApiError } from "../../../api/apiErrorHandler";
+import { useMutation } from "react-query";
+import { queryClient } from "../../../App";
 
-const Index = (props: TodoDetail & SuccessAction) => {
-  const { id, title, content, onSuccess } = props;
+const Index = (props: TodoDetail) => {
+  const { id, title, content} = props;
   const [todoList, setTodoList] = useState<Todo>({
     title: "",
     content: "",
@@ -23,16 +25,12 @@ const Index = (props: TodoDetail & SuccessAction) => {
     });
   }, [title, content]);
 
-  const onModify = async () => {
-    try {
-      await APIs.putTodo(id, todoList);
+  const onModify = useMutation(() => APIs.putTodo(id, todoList), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("getTodo");
       setIsReadOnly(true);
-      onSuccess();
-    } catch (e) {
-      const err = e as ApiError;
-      apiErrorHandler(err);
     }
-  };
+  });
 
   return (
     <Wrapper>
@@ -57,7 +55,7 @@ const Index = (props: TodoDetail & SuccessAction) => {
         ></TextArea>
       </InputWrapper>
       <BtnWrapper>
-        {!isReadOnly && <Button onClick={onModify}>저장하기</Button>}
+        {!isReadOnly && <Button onClick={onModify.mutate}>저장하기</Button>}
         {isReadOnly && (
           <Button onClick={() => setIsReadOnly(false)}>수정하기</Button>
         )}

@@ -7,26 +7,24 @@ import onChangeSetValue from "../../../util/onChangeSetValue";
 import { SuccessAction, Todo } from "../../../types/type";
 import * as APIs from "../../../api/APIs";
 import apiErrorHandler, { ApiError } from "../../../api/apiErrorHandler";
+import { useMutation } from "react-query";
+import { queryClient } from "../../../App";
 
-const Index = ({ onSuccess }: SuccessAction) => {
+const Index = () => {
   const [todoList, setTodoList] = useState<Todo>({
     title: "",
     content: "",
   });
 
-  const onRegister = async () => {
-    try {
-      await APIs.postTodo(todoList);
+  const onRegister = useMutation(() => APIs.postTodo(todoList), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("getTodo");
       setTodoList({
         title: "",
         content: "",
       });
-      onSuccess();
-    } catch (e) {
-      const err = e as ApiError;
-      apiErrorHandler(err);
     }
-  };
+  });
 
   return (
     <Wrapper>
@@ -49,7 +47,7 @@ const Index = ({ onSuccess }: SuccessAction) => {
         ></TextArea>
       </InputWrapper>
       <BtnWrapper>
-        <Button onClick={onRegister}>등록하기</Button>
+        <Button onClick={onRegister.mutate}>등록하기</Button>
       </BtnWrapper>
     </Wrapper>
   );

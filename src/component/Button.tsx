@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 type BtnProps = {
-  onClick: () => void;
+  onClick: (e?: any) => void;
   disabled?: any;
   type?: "submit" | "button";
 };

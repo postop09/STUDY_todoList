@@ -2,22 +2,25 @@ import React from "react";
 import Button from "../Button";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { PATH } from "../../const/enums";
 
 const Header = () => {
   const navigate = useNavigate();
+  const pathName = window.location.pathname;
 
   const onRemoveAuthToken = () => {
     localStorage.removeItem("Authorization");
     alert("로그아웃 되었습니다.");
-    navigate("/auth");
+    navigate(PATH.AUTH);
   };
-
   return (
     <HeaderWrapper>
       <h1>원티드 프리온보딩 챌린지</h1>
-      <div>
-        <Button onClick={onRemoveAuthToken}>로그아웃</Button>
-      </div>
+      {pathName !== PATH.AUTH && (
+        <div>
+          <Button onClick={onRemoveAuthToken}>로그아웃</Button>
+        </div>
+      )}
     </HeaderWrapper>
   );
 };
