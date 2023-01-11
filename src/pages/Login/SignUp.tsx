@@ -6,10 +6,10 @@ import { AccType, AuthChange, BtnClickEvent } from "../../types/type";
 import onChangeSetValue from "../../util/onChangeSetValue";
 import loginValidation from "../../util/loginValidation";
 import * as APIs from "../../api/APIs";
-import { PATH } from "../../const/enums";
+import { PATH } from "../../const/path";
 import apiErrorHandler, { ApiError } from "../../api/apiErrorHandler";
 
-const NewAccount = ({ onChangeAuth }: AuthChange) => {
+const SignUp = ({ onChangeAuth }: AuthChange) => {
   const [newAcc, setNewAcc] = useState<AccType>({ email: "", password: "" });
 
   const onCreate = async (e: BtnClickEvent) => {
@@ -62,4 +62,4 @@ const NewAccount = ({ onChangeAuth }: AuthChange) => {
   );
 };
 
-export default NewAccount;
+export default SignUp;

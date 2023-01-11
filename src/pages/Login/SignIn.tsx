@@ -6,11 +6,11 @@ import { AccType, AuthChange, BtnClickEvent } from "../../types/type";
 import onChangeSetValue from "../../util/onChangeSetValue";
 import loginValidation from "../../util/loginValidation";
 import * as APIs from "../../api/APIs";
-import { PATH } from "../../const/enums";
+import { PATH } from "../../const/path";
 import apiErrorHandler, { ApiError } from "../../api/apiErrorHandler";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ onChangeAuth }: AuthChange) => {
+const SignIn = ({ onChangeAuth }: AuthChange) => {
   const [account, setAccount] = useState<AccType>({ email: "", password: "" });
   const navigate = useNavigate();
 
@@ -71,4 +71,4 @@ const Login = ({ onChangeAuth }: AuthChange) => {
   );
 };
 
-export default Login;
+export default SignIn;

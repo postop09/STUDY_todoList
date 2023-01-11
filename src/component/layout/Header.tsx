@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../Button";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { PATH } from "../../const/enums";
+import { PATH } from "../../const/path";
 
 const Header = () => {
   const navigate = useNavigate();

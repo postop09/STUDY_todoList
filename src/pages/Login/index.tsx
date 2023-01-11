@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import NewAccount from "./NewAccount";
-import Login from "./Login";
+import SignUp from "./SignUp";
+import SignIn from "./SignIn";
 import styled from "styled-components";
 
 const Index = () => {
@@ -12,8 +12,8 @@ const Index = () => {
 
   return (
     <Wrapper>
-      {newAccount && <NewAccount onChangeAuth={onChangeAuth} />}
-      {!newAccount && <Login onChangeAuth={onChangeAuth} />}
+      {newAccount && <SignUp onChangeAuth={onChangeAuth} />}
+      {!newAccount && <SignIn onChangeAuth={onChangeAuth} />}
     </Wrapper>
   );
 };

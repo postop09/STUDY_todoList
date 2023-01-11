@@ -24,7 +24,6 @@ const Index = () => {
         content: "",
       });
     },
-    onError: apiErrorHandler,
   });
 
   return (
