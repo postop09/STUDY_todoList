@@ -1,5 +1,5 @@
 import React, { ComponentType } from 'react';
-import useTokenCheck from "../hooks/useTokenCheck";
+import useTokenCheck from "../hooks/token/useTokenCheck";
 import { PATH } from "../const/path";
 
 const AuthCheck = (AuthComponent: ComponentType) => {
@@ -7,7 +7,7 @@ const AuthCheck = (AuthComponent: ComponentType) => {
   const authorization = () => {
     if (!isAuth) {
       alert("인증정보가 없습니다. 다시 로그인해주세요.");
-      window.location.replace(PATH.AUTH);
+      window.location.replace(PATH.SIGN_IN);
       return <></>;
     }
 

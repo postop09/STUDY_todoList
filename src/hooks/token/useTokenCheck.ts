@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import token from "../util/handleToken";
+import useToken from "./useToken";
 
 const useTokenCheck = () => {
   const [isAuth, setIsAuth] = useState(true);
+  const {getToken} = useToken();
 
   useEffect(() => {
-    if (!!token.get()) {
+    if (!!getToken()) {
       setIsAuth(true);
     } else {
       setIsAuth(false);

@@ -13,12 +13,12 @@ import { AccType, Todo } from "../types/type";
 // ----------------------------------------------
 
 // 0-1. 회원가입
-export const postNewAcc = (newAcc: AccType) => {
+export const postSignUp = (newAcc: AccType) => {
   return apiRequest("POST", "/users/create", null, newAcc);
 };
 
 // 0-2. 로그인
-export const postLogin = (account: AccType) => {
+export const postSignIn = (account: AccType) => {
   return apiRequest("POST", "/users/login", null, account);
 };
 

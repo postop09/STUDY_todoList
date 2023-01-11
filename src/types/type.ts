@@ -4,7 +4,6 @@
  0. 로그인
  1. TodoList
  ---------------------------------------------- */
-import React from "react";
 
 // ----------------------------------------------
 // 0. 로그인
@@ -13,12 +12,6 @@ export type AccType = {
   email: string;
   password: string;
 };
-
-export type AuthChange = {
-  onChangeAuth: () => void;
-};
-
-export type BtnClickEvent = React.MouseEvent<HTMLButtonElement, MouseEvent>;
 
 // ----------------------------------------------
 // 1. TodoList
