@@ -56,7 +56,7 @@ const Index = (props: TodoDetail) => {
         ></TextArea>
       </InputWrapper>
       <BtnWrapper>
-        {!isReadOnly && <Button onClick={onModify}>저장하기</Button>}
+        {!isReadOnly && <Button onClick={() => onModify()}>저장하기</Button>}
         {isReadOnly && (
           <Button onClick={() => setIsReadOnly(false)}>수정하기</Button>
         )}

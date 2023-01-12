@@ -1,8 +1,8 @@
-const request = async (
+const apiRequest = async (
   method: string,
   url: string,
   authToken?: string | null,
-  body?: any
+  body?: {}
 ): Promise<any> => {
   const options = {
     method: method,
@@ -35,4 +35,4 @@ const request = async (
   });
 };
 
-export default request;
+export default apiRequest;

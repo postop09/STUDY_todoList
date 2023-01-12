@@ -4,7 +4,7 @@ import Layout from "../component/layout/Layout";
 import { PATH } from "../const/path";
 import Home from "../pages/Home";
 import Error from "../pages/Error";
-import AuthCheck from "../component/AuthCheck";
+import AuthCheck from "./AuthCheck";
 import SignIn from "../pages/Auth/SignIn";
 import SignUp from "../pages/Auth/SignUp";
 

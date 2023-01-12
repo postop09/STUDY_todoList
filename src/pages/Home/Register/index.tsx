@@ -8,7 +8,6 @@ import { Todo } from "../../../types/type";
 import * as APIs from "../../../api/APIs";
 import { useMutation } from "react-query";
 import { queryClient } from "../../../App";
-import apiErrorHandler from "../../../api/apiErrorHandler";
 
 const Index = () => {
   const [todoList, setTodoList] = useState<Todo>({
@@ -47,7 +46,7 @@ const Index = () => {
         ></TextArea>
       </InputWrapper>
       <BtnWrapper>
-        <Button onClick={onRegister}>등록하기</Button>
+        <Button onClick={() => onRegister()}>등록하기</Button>
       </BtnWrapper>
     </Wrapper>
   );
