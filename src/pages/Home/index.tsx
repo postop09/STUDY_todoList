@@ -4,14 +4,16 @@ import Button from "../../component/Button";
 import ListItem from "../../component/ListItem";
 import Register from "./Register";
 import Detail from "./Detail";
-import useGetTodoList from "../../hooks/todo/useGetTodoList";
+import useGetTodoList from "../../hooks/todo/queries/useGetTodoList";
 import * as Style from "./style";
 import { PATH } from "../../const/path";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const {todoList} = useGetTodoList();
   const pathName = window.location.pathname;
   const todoId = pathName.split("/")[2];
+  const navigate = useNavigate();
 
   return (
     <Style.Wrapper>
@@ -19,7 +21,7 @@ const Index = () => {
         <Style.TitleWrapper>
           <TitleH2>목록</TitleH2>
           <div>
-            <Button onClick={() => window.location.href = PATH.HOME}>추가</Button>
+            <Button onClick={() => navigate(PATH.HOME)}>추가</Button>
           </div>
         </Style.TitleWrapper>
         <Style.Ul>

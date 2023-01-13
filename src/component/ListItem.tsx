@@ -3,7 +3,7 @@ import Button from "./Button";
 import styled from "styled-components";
 import { TodoDetail } from "../types/type";
 import { PATH } from "../const/path";
-import useDeleteTodo from "../hooks/todo/useDeleteTodo";
+import useDeleteTodo from "../hooks/todo/queries/useDeleteTodo";
 import { useNavigate } from "react-router-dom";
 
 const ListItem = (props: TodoDetail) => {
@@ -11,12 +11,9 @@ const ListItem = (props: TodoDetail) => {
   const {onDelete} = useDeleteTodo();
   const navigate = useNavigate();
 
-  // TODO - NAVIGATE 로 페이지 리로드 없이 화면 그려줄 방법
-  //  1. 리랜더링
-  //  2. 상태 변화 확인
   return (
     <Li>
-      <ContentBtn type="button" onClick={() => window.location.href = `${PATH.HOME}/${id}`}>
+      <ContentBtn type="button" onClick={() => navigate(`${PATH.HOME}/${id}`)}>
         {title}
       </ContentBtn>
       <BtnWrapper>

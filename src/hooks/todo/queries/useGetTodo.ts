@@ -1,10 +1,9 @@
-import * as APIs from "../../api/APIs";
-import { useMutation, useQuery } from "react-query";
+import * as APIs from "../../../api/APIs";
+import { useQuery } from "react-query";
 import { useState } from "react";
-import { TodoDetail } from "../../types/type";
-import { queryClient } from "../../App";
+import { TodoDetail } from "../../../types/type";
 
-const useDetailTodo = (id: string) => {
+const useGetTodo = (id: string) => {
   const [todoDetail, setTodoDetail] = useState<TodoDetail>();
 
   useQuery(["getTodo", id], () => APIs.getTodo(id), {
@@ -17,4 +16,4 @@ const useDetailTodo = (id: string) => {
   return {todoDetail};
 };
 
-export default useDetailTodo;
+export default useGetTodo;

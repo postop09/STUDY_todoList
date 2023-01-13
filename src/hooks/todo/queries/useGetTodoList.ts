@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from "react-query";
-import * as APIs from "../../api/APIs";
-import { TodoDetail } from "../../types/type";
+import * as APIs from "../../../api/APIs";
+import { TodoDetail } from "../../../types/type";
 
 const useGetTodoList = () => {
   const [todoList, setTodoList] = useState<TodoDetail[]>([]);
