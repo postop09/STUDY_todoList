@@ -9,25 +9,21 @@ import * as APIs from "../../../api/APIs";
 import { useMutation } from "react-query";
 import { queryClient } from "../../../App";
 import apiErrorHandler from "../../../api/apiErrorHandler";
+import useDetailTodo from "../../../hooks/todo/useDetailTodo";
 
-const Index = (props: TodoDetail) => {
-  const { id, title, content} = props;
+const Index = ({todoId}: {todoId: string}) => {
+  const {todoDetail} = useDetailTodo(todoId);
   const [todoList, setTodoList] = useState<Todo>({
     title: "",
     content: "",
   });
   const [isReadOnly, setIsReadOnly] = useState(true);
 
-  useEffect(() => {
-    setTodoList({
-      title,
-      content,
-    });
-  }, [title, content]);
+  console.log(todoDetail);
 
-  const {mutate: onModify} = useMutation(() => APIs.putTodo(id, todoList), {
+  const {mutate: onModify} = useMutation(() => APIs.putTodo(todoId, todoList), {
     onSuccess: () => {
-      queryClient.invalidateQueries("getTodo");
+      queryClient.invalidateQueries("getTodoList");
       setIsReadOnly(true);
     },
     onError: apiErrorHandler,
@@ -40,7 +36,7 @@ const Index = (props: TodoDetail) => {
         htmlFor={"inp_title"}
         label={"제목"}
         onChange={(e) => onChangeSetValue(setTodoList, "title", e.target.value)}
-        value={todoList.title}
+        value={todoDetail?.title}
         readOnly={isReadOnly}
       />
       <InputWrapper>
@@ -51,7 +47,7 @@ const Index = (props: TodoDetail) => {
           onChange={(e) =>
             onChangeSetValue(setTodoList, "content", e.target.value)
           }
-          value={todoList.content}
+          value={todoDetail?.content}
           readOnly={isReadOnly}
         ></TextArea>
       </InputWrapper>

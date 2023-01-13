@@ -17,7 +17,7 @@ const Index = () => {
 
   const {mutate: onRegister} = useMutation(() => APIs.postTodo(todoList), {
     onSuccess: () => {
-      queryClient.invalidateQueries("getTodo");
+      queryClient.invalidateQueries("getTodoList");
       setTodoList({
         title: "",
         content: "",
