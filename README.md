@@ -75,4 +75,4 @@ React-Query, TypeScript 학습을 위해 원티드 프리온보딩 챌린지에 
 - React-query useQuery/useMutation
 - React-query naming/최적화
 - 브라우저 history 컨트롤
-- 코드 리팩토링
+- 코드 리팩토링/관심사 분리
