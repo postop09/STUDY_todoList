@@ -1,29 +1,24 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./pages/Login";
-import Error from "./pages/Error";
-import Home from "./pages/Home";
-import Layout from "./component/layout/Layout";
-import { PATH } from "./const/enums";
 import { QueryClient, QueryClientProvider } from "react-query";
+import apiErrorHandler from "./api/apiErrorHandler";
+import Router from "./router/Router";
 
-export const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      onError: (error) => apiErrorHandler(error as any),
+    },
+    mutations: {
+      onError: (error) => apiErrorHandler(error as any),
+    },
+  }
+});
 
 function App() {
   return (
-    <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          <Routes>
-            <Route element={<Layout />}>
-              <Route path={PATH.ROOT} element={<Navigate to={PATH.AUTH} />} />
-              <Route path={PATH.AUTH} element={<Login />} />
-              <Route path={PATH.HOME} element={<Home />} />
-              <Route path={`${PATH.HOME}/:id`} element={<Home />} />
-              <Route path="/*" element={<Error />} />
-            </Route>
-          </Routes>
-        </QueryClientProvider>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <Router/>
+    </QueryClientProvider>
   );
 }
 

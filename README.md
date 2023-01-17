@@ -27,7 +27,6 @@ React-Query, TypeScript 학습을 위해 원티드 프리온보딩 챌린지에 
 
 ## 🔴개발 환경
 - 개발 기간: 22.12.29 ~ 23.01.10
-- 개인 개발
 - 원티드 로컬서버 API 제공
 - React.js
 - TypeScript
@@ -62,7 +61,7 @@ React-Query, TypeScript 학습을 위해 원티드 프리온보딩 챌린지에 
 ### 👹개발 전 목표/고려사항
 - TypeScript 최적화
 - api 호출 로직
-- 컴포넌트 구조
+- 컴포넌트 구조 (관심사 분리)
 - React-Query 시도
 
 ### 👹배우고 느낀 점
@@ -74,6 +73,6 @@ React-Query, TypeScript 학습을 위해 원티드 프리온보딩 챌린지에 
 
 ## 🔴리마인드
 - React-query useQuery/useMutation
-- React-query naming
-- React-query 최적화
+- React-query naming/최적화
 - 브라우저 history 컨트롤
+- 코드 리팩토링/관심사 분리

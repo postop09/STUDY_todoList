@@ -1,5 +1,6 @@
 export enum PATH {
   ROOT = "/",
   HOME = "/home",
-  AUTH = "/auth",
+  SIGN_IN = "/signIn",
+  SIGN_UP = "/signUp"
 }

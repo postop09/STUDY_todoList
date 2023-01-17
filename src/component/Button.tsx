@@ -1,29 +1,23 @@
-import React from "react";
+import React, { ButtonHTMLAttributes } from "react";
 import styled from "styled-components";
 
-type BtnProps = {
-  onClick: (e?: any) => void;
-  disabled?: any;
-  type?: "submit" | "button";
-};
-
-interface Button extends BtnProps {
+interface BtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode | React.ReactNode[];
 }
 
-const Button = (props: Button) => {
-  const { onClick, children, disabled, type = "button" } = props;
+const Button = (props: BtnProps) => {
+  const { children, disabled} = props;
 
   if (disabled) {
     return (
-      <DisabledBtn type="button" onClick={onClick} disabled={disabled}>
+      <DisabledBtn {...props}>
         {children}
       </DisabledBtn>
     );
   }
 
   return (
-    <WriteBtn type={type} onClick={onClick} disabled={disabled}>
+    <WriteBtn {...props}>
       {children}
     </WriteBtn>
   );
