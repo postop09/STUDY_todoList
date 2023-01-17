@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import React from "react";
 import Input from "../../component/Input";
 import Button from "../../component/Button";
 import { AuthWrapper, BtnWrapper, InputWrapper, TitleH2 } from "../../style/style";

@@ -2,15 +2,18 @@ import React from "react";
 import Button from "../Button";
 import styled from "styled-components";
 import { PATH } from "../../const/path";
+import useToken from "../../hooks/token/useToken";
 
 const Header = () => {
   const pathName = window.location.pathname;
+  const {clearToken} = useToken();
 
   const onRemoveAuthToken = () => {
-    localStorage.removeItem("Authorization");
+    clearToken();
     alert("로그아웃 되었습니다.");
     window.location.replace(PATH.SIGN_IN);
   };
+
   return (
     <HeaderWrapper>
       <h1>원티드 프리온보딩 챌린지</h1>
