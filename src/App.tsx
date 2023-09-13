@@ -2,6 +2,7 @@ import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import apiErrorHandler from "./api/apiErrorHandler";
 import Router from "./router/Router";
+import {AppProvider} from "./AppContext";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,7 +18,9 @@ export const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Router/>
+      <AppProvider>
+        <Router/>
+      </AppProvider>
     </QueryClientProvider>
   );
 }

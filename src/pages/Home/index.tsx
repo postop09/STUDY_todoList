@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { TitleH2 } from "../../style/style";
 import Button from "../../component/Button";
 import ListItem from "../../component/ListItem";
@@ -14,6 +14,14 @@ const Index = () => {
   const pathName = window.location.pathname;
   const todoId = pathName.split("/")[2];
   const navigate = useNavigate();
+
+  useEffect(() => {
+    list();
+  }, [])
+
+  const list = async () => {
+    await console.log("GET LIST");
+  }
 
   return (
     <Style.Wrapper>
